@@ -1,0 +1,196 @@
+{# templates/rutas/crear_ruta.html #}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gestionar rutas{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/rutas.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="pagina-rutas">
+  <div class="row justify-content-center">
+    <div class="col-xl-11">
+
+      <!-- =========================================== -->
+      <!-- ENCABEZADO DEL MÓDULO -->
+      <!-- =========================================== -->
+      <header class="encabezado-modulo d-flex flex-wrap justify-content-between align-items-center mb-3">
+        <div>
+          <h1 class="titulo-modulo mb-1">Gestionar rutas</h1>
+          <p class="texto-descripcion">
+            Planifique y asigne visitas médicas según zona, visitador y disponibilidad.
+          </p>
+        </div>
+
+        <a href="{% url 'inicio' %}" class="btn btn-accion-inicio">
+          🏠 Volver al inicio
+        </a>
+      </header>
+
+      <!-- =========================================== -->
+      <!-- BLOQUE 1 — FILTROS POR ZONA Y ROL -->
+      <!-- =========================================== -->
+      <section class="panel-bloque bloque-filtros mb-4">
+        <div class="panel-body">
+          <h2 class="seccion-titulo mb-3">Filtros por zona</h2>
+
+          <form method="get" id="form-filtros" class="row g-3">
+
+            {% if request.GET.visitador_id %}
+            <input type="hidden" name="visitador_id" value="{{ request.GET.visitador_id }}">
+            {% endif %}
+
+            <!-- DEPARTAMENTO -->
+            <div class="col-md-4">
+              <label for="departamento" class="form-label">Departamento</label>
+              <select name="departamento" id="departamento" class="form-select" onchange="this.form.submit()">
+                <option value="">-- Todos los departamentos --</option>
+                {% for d in departamentos %}
+                <option value="{{ d.id }}"{% if departamento_actual == d.id %} selected{% endif %}>
+                  {{ d.nombre }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- PROVINCIA -->
+            <div class="col-md-4">
+              <label for="provincia" class="form-label">Provincia</label>
+              <select name="provincia" id="provincia" class="form-select"
+                onchange="this.form.submit()"
+                {% if not departamento_actual %}disabled{% endif %}>
+                <option value="">-- Todas las provincias --</option>
+                {% for p in provincias %}
+                <option value="{{ p.id }}"{% if provincia_actual == p.id %} selected{% endif %}>
+                  {{ p.nombre }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <!-- DISTRITO -->
+            <div class="col-md-4">
+              <label for="distrito" class="form-label">Distrito</label>
+              <select name="distrito" id="distrito" class="form-select"
+                onchange="this.form.submit()"
+                {% if not provincia_actual %}disabled{% endif %}>
+                <option value="">-- Todos los distritos --</option>
+                {% for d in distritos %}
+                <option value="{{ d.id }}"{% if distrito_actual == d.id %} selected{% endif %}>
+                  {{ d.nombre }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+          </form>
+
+          <!-- SELECTOR DE VISITADOR — SOLO ADMIN/SUPERVISOR -->
+          {% if request.user.is_superuser or request.user.rol == 'supervisor' %}
+          <hr class="my-4">
+
+          <form method="get" id="form-visitador" class="row g-3 align-items-end">
+
+            {% if departamento_actual %}
+            <input type="hidden" name="departamento" value="{{ departamento_actual }}">
+            {% endif %}
+            {% if provincia_actual %}
+            <input type="hidden" name="provincia" value="{{ provincia_actual }}">
+            {% endif %}
+            {% if distrito_actual %}
+            <input type="hidden" name="distrito" value="{{ distrito_actual }}">
+            {% endif %}
+            {% if request.GET.busqueda %}
+            <input type="hidden" name="busqueda" value="{{ request.GET.busqueda }}">
+            {% endif %}
+
+            <div class="col-md-6">
+              <label for="visitador_id" class="form-label">Seleccionar visitador</label>
+              <select name="visitador_id" id="visitador_id" class="form-select" onchange="this.form.submit()" required>
+                <option value="">-- Selecciona un visitador --</option>
+                {% for u in visitadores %}
+                <option value="{{ u.id }}"{% if request.GET.visitador_id == u.id|stringformat:"s" %} selected{% endif %}>
+                  {{ u.first_name }} {{ u.last_name }} ({{ u.username }})
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+          </form>
+          {% endif %}
+
+        </div>
+      </section>
+
+      <!-- =========================================== -->
+      <!-- BLOQUE 2 — BÚSQUEDA + LEYENDA -->
+      <!-- =========================================== -->
+      <section class="panel-bloque bloque-controles mb-4">
+        <div class="panel-body">
+
+          <!-- BÚSQUEDA -->
+          <div class="row g-3 align-items-center mb-3">
+            <div class="col-lg-8">
+              <label for="busquedaInput" class="form-label">Buscar médico</label>
+              <form method="get" id="form-busqueda">
+                {% if departamento_actual %}
+                <input type="hidden" name="departamento" value="{{ departamento_actual }}">
+                {% endif %}
+                {% if provincia_actual %}
+                <input type="hidden" name="provincia" value="{{ provincia_actual }}">
+                {% endif %}
+                {% if distrito_actual %}
+                <input type="hidden" name="distrito" value="{{ distrito_actual }}">
+                {% endif %}
+                {% if request.GET.visitador_id %}
+                <input type="hidden" name="visitador_id" value="{{ request.GET.visitador_id }}">
+                {% endif %}
+                <input type="text" name="busqueda" id="busquedaInput" class="form-control"
+                  placeholder="Buscar por nombre o CMP" value="{{ request.GET.busqueda }}">
+              </form>
+            </div>
+
+            <div class="col-lg-4 text-lg-end">
+              <p class="mb-1 small text-muted">¿No encontró el médico?</p>
+
+              {% if request.user.is_superuser or request.user.rol == 'supervisor' %}
+                <a href="{% url 'doctores:crear_doctor' %}" class="btn btn-outline-success btn-sm">
+                  ➕ Registrar médico
+                </a>
+              {% else %}
+                <span class="text-muted small">Consultar con su administrador</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- LEYENDA DE ESTADOS -->
+          <div class="leyenda-estados small">
+            <span class="badge rounded-pill bg-warning text-dark">Programado</span>
+            <span class="badge rounded-pill bg-danger">Vencido</span>
+            <span class="badge rounded-pill bg-secondary">Sin ruta</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =========================================== -->
+      <!-- BLOQUE 3 — TABLA CON INCLUDE -->
+      <!-- =========================================== -->
+      <section class="panel-bloque bloque-tabla">
+        <div class="panel-body">
+          <h2 class="seccion-titulo mb-3">Listado de médicos</h2>
+
+          <div id="contenedor-tabla">
+            {% include 'rutas/tabla_doctores.html' %}
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/rutas_crear.js' %}"></script>
+{% endblock %}

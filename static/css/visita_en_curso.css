@@ -1,0 +1,184 @@
+/* Página general */
+.pagina-visita {
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
+}
+
+/* Encabezado */
+.visita-header .titulo-modulo {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #1a3b5d;
+}
+
+.visita-header .subtitulo-modulo {
+    font-size: 0.95rem;
+    color: #6c757d;
+}
+
+.btn-volver-inicio {
+    background-color: #444a59;
+    border: none;
+    color: #fff;
+    border-radius: 999px;
+    padding: 0.45rem 1.2rem;
+    font-size: 0.9rem;
+}
+
+.btn-volver-inicio:hover {
+    background-color: #2f3440;
+    color: #fff;
+}
+
+/* Paneles */
+.panel-bloque {
+    background-color: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e3e6ef;
+}
+
+.panel-bloque + .panel-bloque {
+    margin-top: 1.2rem;
+}
+
+.panel-bloque .panel-body {
+    padding: 1.4rem 1.6rem;
+}
+
+/* Bloque doctor */
+.doctor-nombre {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #1a3b5d;
+}
+
+.doctor-especialidad {
+    font-weight: 500;
+    color: #295f8a;
+}
+
+.texto-secundario {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.badge-ruta {
+    display: inline-block;
+    background: #e6f2ff;
+    color: #295f8a;
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+}
+
+.link-mapa {
+    font-size: 0.9rem;
+    text-decoration: underline;
+    color: #295f8a;
+}
+
+.link-mapa:hover {
+    color: #1a3b5d;
+}
+
+/* Bloque productos */
+.seccion-titulo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a3b5d;
+}
+
+/* Chips de filtro */
+.filtros-tipo-producto {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.chip-tipo {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid #d0d7e2;
+    font-size: 0.85rem;
+    color: #495057;
+    background-color: #f8fafc;
+    text-decoration: none;
+}
+
+.chip-tipo.activo {
+    background: linear-gradient(135deg, #295f8a, #1a3b5d);
+    color: #ffffff;
+    border-color: transparent;
+}
+
+.chip-tipo:hover {
+    background-color: #e8f0fa;
+    color: #1a3b5d;
+}
+
+/* Botones */
+.btn-accion-agregar {
+    background: #295f8a;
+    border: none;
+    color: #ffffff;
+    border-radius: 999px;
+    font-size: 0.9rem;
+}
+
+.btn-accion-agregar:hover {
+    background: #1a3b5d;
+    color: #ffffff;
+}
+
+.btn-accion-finalizar {
+    background: linear-gradient(135deg, #2abf6d, #159a4a);
+    border: none;
+    color: #ffffff;
+    border-radius: 999px;
+    padding-inline: 1.4rem;
+}
+
+.btn-accion-finalizar:hover {
+    background: linear-gradient(135deg, #159a4a, #0f7a39);
+    color: #ffffff;
+}
+
+.btn-eliminar-item {
+    font-size: 0.85rem;
+    color: #d9534f;
+}
+
+.btn-eliminar-item:hover {
+    color: #b52b27;
+    text-decoration: underline;
+}
+
+/* Tabla de items */
+.tabla-items-wrapper {
+    overflow-x: auto;
+}
+
+.tabla-items th {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.tabla-items td {
+    font-size: 0.9rem;
+}
+
+/* Bloque comentarios */
+.bloque-comentarios textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+/* Responsivo */
+@media (max-width: 767.98px) {
+    .panel-bloque .panel-body {
+        padding: 1.2rem;
+    }
+}

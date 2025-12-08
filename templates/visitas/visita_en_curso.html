@@ -1,0 +1,240 @@
+{# templates/visitas/visita_en_curso.html #}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Visita en curso{% endblock %}
+
+{% block extra_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/visita_en_curso.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5 visita-en-curso">
+
+    {# TÍTULO Y RESUMEN #}
+    <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+        <div>
+            <h1 class="h3 mb-1">🩺 Visita en curso</h1>
+            <p class="text-muted mb-0">
+                Complete los productos entregados/presentados y los comentarios de la visita.
+            </p>
+        </div>
+        <a href="{% url 'visitas:gestionar_visitas_medicas' %}" class="btn btn-outline-secondary btn-sm mt-2 mt-md-0">
+            ⬅ Volver a gestionar visitas
+        </a>
+    </div>
+
+    {# 🔹 OJO: los mensajes ya se muestran en base.html, no se duplican aquí #}
+
+    {# BLOQUE 1: INFORMACIÓN DEL MÉDICO Y RUTA #}
+    <section class="panel-bloque mb-3">
+        <div class="panel-body row g-3 align-items-center">
+            <div class="col-md-8">
+                <h2 class="h5 mb-1">{{ doctor.apellido }} {{ doctor.nombre }}</h2>
+                <p class="mb-1 small text-muted">
+                    CMP: {{ doctor.cmp|default:"—" }} ·
+                    {# Especialidad normalizada: FK -> texto -> Sin especialidad #}
+                    {% if doctor.especialidad_fk %}
+                    {{ doctor.especialidad_fk.nombre }}
+                    {% elif doctor.especialidad %}
+                    {{ doctor.especialidad }}
+                    {% else %}
+                    Sin especialidad
+                    {% endif %}
+                </p>
+                <p class="mb-0 small">
+                    📍 {{ doctor.direccion|default:"Sin dirección registrada" }}
+                    {% if doctor.ubigeo %}
+                    — {{ doctor.ubigeo.provincia.departamento.nombre }},
+                    {{ doctor.ubigeo.provincia.nombre }},
+                    {{ doctor.ubigeo.nombre }}
+                    {% endif %}
+                </p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                {% if ruta %}
+                <span class="badge bg-primary mb-1">Ruta asociada</span>
+                <p class="mb-0 small text-muted">
+                    Fecha programada: {{ ruta.fecha_visita|date:"d/m/Y" }}<br>
+                    Estado actual: {{ ruta.get_estatus_display|default:ruta.estatus }}
+                </p>
+                {% else %}
+                <span class="badge bg-secondary mb-1">Visita sin ruta</span>
+                <p class="mb-0 small text-muted">
+                    Visita iniciada desde el buscador de médicos.
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    {# BLOQUE 2: UBICACIÓN (similar a asistencia) #}
+    <section class="panel-bloque mb-3">
+        <div class="panel-body text-center">
+            <p class="mb-1">
+                <strong>Ubicación de inicio:</strong>
+                <span id="ubicacionTexto" class="text-muted">Detectando...</span>
+            </p>
+            <p id="ubicacionGeneral" class="text-muted mb-1" style="display:none;">
+                ✓ Ubicación registrada correctamente
+            </p>
+            <a id="linkUbicacion" href="#" target="_blank" class="link-mapa" style="display:none;">
+                Ver ubicación en Google Maps
+            </a>
+            <p id="ubicacionError" class="text-danger small mb-0" style="display:none;"></p>
+        </div>
+    </section>
+
+    {# BLOQUE 3: FILTRO Y SELECCIÓN DE PRODUCTO #}
+    <section class="panel-bloque mb-3">
+        <div class="panel-body">
+            <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
+                <h2 class="h6 mb-2 mb-md-0">Seleccionar producto</h2>
+
+                <div class="filtros-tipo-producto d-flex flex-wrap gap-2">
+                    <a href="?tipo=todos" class="pill-filtro {% if filtro_tipo == 'todos' %}activo{% endif %}">
+                        Todos
+                    </a>
+                    <a href="?tipo=prescribible"
+                        class="pill-filtro {% if filtro_tipo == 'prescribible' %}activo{% endif %}">
+                        Prescribibles
+                    </a>
+                    <a href="?tipo=muestra" class="pill-filtro {% if filtro_tipo == 'muestra' %}activo{% endif %}">
+                        Muestras médicas
+                    </a>
+                    <a href="?tipo=promocional"
+                        class="pill-filtro {% if filtro_tipo == 'promocional' %}activo{% endif %}">
+                        Productos promocionales
+                    </a>
+                    <a href="?tipo=merch" class="pill-filtro {% if filtro_tipo == 'merch' %}activo{% endif %}">
+                        Merch / material promocional
+                    </a>
+                </div>
+            </div>
+
+            {# Formulario para AGREGAR producto al borrador #}
+            <form method="post" class="row g-2 align-items-end">
+                {% csrf_token %}
+                <input type="hidden" name="accion" value="agregar_item">
+                <input type="hidden" name="ubicacion_inicio" id="ubicacionInput">
+
+                <div class="col-md-7">
+                    <label class="form-label small mb-1">Producto</label>
+                    <select name="producto_id" class="form-select form-select-sm" required>
+                        <option value="">-- Seleccione un producto --</option>
+                        {% for p in productos %}
+                        <option value="{{ p.id }}">
+                            {{ p.nombre }} · {{ p.presentacion }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-2 col-6">
+                    <label class="form-label small mb-1">Cantidad</label>
+                    <input type="number" name="cantidad" min="1" value="1" class="form-control form-control-sm"
+                        required>
+                </div>
+
+                <div class="col-md-3 col-6 text-md-end">
+                    <button type="submit" class="btn btn-primary btn-sm w-100">
+                        ➕ Agregar a la visita
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    {# BLOQUE 4: RESUMEN DE PRODUCTOS EN LA VISITA #}
+    <section class="panel-bloque mb-3">
+        <div class="panel-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h2 class="h6 mb-0">Productos registrados en la visita</h2>
+                <span class="badge bg-light text-dark">
+                    {{ items|length }} producto{{ items|length|pluralize }}
+                </span>
+            </div>
+
+            {% if items %}
+            <div class="table-responsive">
+                <table class="table table-sm table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 45%;">Producto</th>
+                            <th style="width: 20%;">Tipo</th>
+                            <th style="width: 15%;" class="text-center">Cantidad</th>
+                            <th style="width: 20%;" class="text-end">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>{{ item.producto_nombre }}</td>
+                            <td class="small text-muted">{{ item.tipo_producto }}</td>
+                            <td class="text-center">{{ item.cantidad }}</td>
+                            <td class="text-end">
+                                <form method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="accion" value="eliminar_item">
+                                    <input type="hidden" name="item_index" value="{{ item.index }}">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        Quitar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-muted mb-0 small">
+                Aún no se han agregado productos a la visita.
+            </p>
+            {% endif %}
+        </div>
+    </section>
+
+    {# BLOQUE 5: COMENTARIOS Y ACCIONES FINALES #}
+    <section class="panel-bloque mb-4">
+        <div class="panel-body">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="ubicacion_inicio" id="ubicacionInputFooter">
+
+                <div class="mb-3">
+                    <label for="comentarios" class="form-label">
+                        Comentarios de la visita
+                        <span class="text-muted small">(opcional)</span>
+                    </label>
+                    <textarea name="comentarios" id="comentarios" rows="3" class="form-control"
+                        placeholder="Ejemplo: Se revisaron resultados de laboratorio, se reforzó esquema de tratamiento, etc.">{{ comentarios }}</textarea>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2 justify-content-between">
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="submit" name="accion" value="guardar" class="btn btn-outline-primary">
+                            💾 Guardar borrador
+                        </button>
+
+                        <button type="submit" name="accion" value="finalizar" class="btn btn-success">
+                            ✅ Finalizar visita
+                        </button>
+                    </div>
+
+                    <button type="submit" name="accion" value="cancelar" class="btn btn-outline-danger">
+                        ✖ Cancelar visita
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="{% static 'js/visita_en_curso.js' %}"></script>
+{% endblock %}

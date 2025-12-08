@@ -1,0 +1,309 @@
+<html lang="es"><head>
+    <meta charset="UTF-8">
+    <title>Sistema de Visitas Médicas</title>
+
+    <!-- Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon servido por WhiteNoise + Manifest -->
+    <link rel="icon" href="/static/img/favicon.ico">
+
+    <!-- CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <style>
+        @media (max-width: 767px) { .solo-pc { display: none !important; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <!-- Si quieres logo:
+        <a class="navbar-brand d-flex align-items-center" href="/">
+          <img src="/static/img/logo.png" alt="Logo" height="24" class="me-2">
+          Inicio
+        </a>
+        -->
+        <a class="navbar-brand" href="/">Inicio</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                
+                    
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cambiar-password/">Cambiar contraseña</a>
+                    </li>
+                    <li class="nav-item">
+                        <form id="logout-form" action="/accounts/logout/" method="post" style="display: inline;">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="Uvc2of51ek6y0DKQfnYpso5HpBt40l1XNCgPxwgKVXEHFu24zpIajr8fLEajhWK6">
+                            <a href="#" class="nav-link text-white" onclick="document.getElementById('logout-form').submit(); return false;">Cerrar sesión</a>
+                        </form>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-3">
+    
+        
+            
+        
+    
+</div>
+
+<div class="container mt-4">
+    
+<div class="container mt-4">
+  <h2 class="mb-4">Gestionar Rutas</h2>
+  <a href="/" class="btn btn-secondary mb-4">🏠 Inicio</a>
+
+  
+  
+    
+      
+    
+  
+
+  
+  <form method="get" id="form-filtros" class="row g-3 mb-4">
+    
+
+    <div class="col-md-4">
+      <label for="departamento" class="form-label">Departamento:</label>
+      <select name="departamento" id="departamento" class="form-select" onchange="this.form.submit()">
+        <option value="">-- Todos los departamentos --</option>
+        
+          <option value="2">SELENIUM</option>
+        
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label for="provincia" class="form-label">Provincia:</label>
+      <select name="provincia" id="provincia" class="form-select" onchange="this.form.submit()" disabled="">
+        <option value="">-- Todas las provincias --</option>
+        
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label for="distrito" class="form-label">Distrito:</label>
+      <select name="distrito" id="distrito" class="form-select" onchange="this.form.submit()" disabled="">
+        <option value="">-- Todos los distritos --</option>
+        
+      </select>
+    </div>
+  </form>
+
+  
+  
+
+  
+  <form method="get" id="form-busqueda" class="mb-3">
+    
+    
+    
+    
+    <input type="text" name="busqueda" id="busquedaInput" class="form-control" placeholder="Buscar por nombre o CMP" value="">
+  </form>
+
+  
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <p class="mb-0"><strong>¿No encontró el médico a visitar?</strong></p>
+    <a href="/doctores/nuevo-doctor/" class="btn btn-outline-success btn-sm d-none">➕ Registrar Médico</a>
+  </div>
+
+  
+  <div class="mb-3 small">
+    <span class="badge text-bg-success">Completado</span>
+    <span class="badge text-bg-warning">Pendiente</span>
+    <span class="badge text-bg-danger">Retraso</span>
+    <span class="badge text-bg-primary">Emergencia</span>
+    <span class="badge text-bg-light text-dark">Sin ruta</span>
+  </div>
+
+  
+  <div id="contenedor-tabla">
+    <!--templates/rutas/tabla_docotres.html-->
+<table class="table table-striped align-middle">
+  <thead>
+    <tr>
+      <th style="width: 90px;">CMP</th>
+      <th>Nombre</th>
+      <th>Especialidad</th>
+      <th>Dirección</th>
+      <th>Ubigeo</th>
+      <th style="width: 170px;">Estado</th>
+      <th style="width: 300px;">Acción</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>SEL123</td>
+      <td>Doctor Selenium Corregido</td>
+      <td>M.G.</td>
+      <td>Calle Selenium 123</td>
+      <td>
+        
+          SELENIUM, SELENIUM, SELENIUM
+        
+      </td>
+
+      
+      <td>
+        
+          <span class="badge text-bg-light text-dark" title="No hay rutas registradas">Sin ruta</span>
+        
+      </td>
+
+      
+      <td>
+        <form method="post" action="" class="row g-2 align-items-center">
+          <input type="hidden" name="csrfmiddlewaretoken" value="Uvc2of51ek6y0DKQfnYpso5HpBt40l1XNCgPxwgKVXEHFu24zpIajr8fLEajhWK6">
+          <input type="hidden" name="doctor_id" value="2">
+
+          
+
+          <div class="col-6 col-md-5">
+            <input type="date" name="fecha_visita" class="form-control form-control-sm">
+          </div>
+          <div class="col-6 col-md-7 d-flex gap-2">
+            <button type="submit" class="btn btn-sm btn-primary">Crear Ruta</button>
+            
+          </div>
+        </form>
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+
+
+  </div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const formFiltros   = document.getElementById("form-filtros");
+  const formBusqueda  = document.getElementById("form-busqueda");
+  const contenedor    = document.getElementById("contenedor-tabla");
+  const inputBusqueda = document.getElementById("busquedaInput");
+
+  function buildParams() {
+    const params = new URLSearchParams(new FormData(formFiltros));
+    for (const [k, v] of new FormData(formBusqueda).entries()) params.set(k, v);
+    params.delete('page'); // al cambiar búsqueda, volver a la primera página
+    return params;
+  }
+
+  // Buscar mientras escribe
+  let t = null;
+  inputBusqueda.addEventListener('input', () => {
+    clearTimeout(t);
+    t = setTimeout(() => {
+      const params = buildParams();
+      fetch(window.location.pathname + "?" + params.toString(), {
+        headers: { "X-Requested-With": "XMLHttpRequest" }
+      }).then(r => r.json()).then(data => { contenedor.innerHTML = data.html; });
+    }, 350);
+  });
+
+  // Mantener filtros al paginar (delegación)
+  document.addEventListener('click', function (e) {
+    const a = e.target.closest('.pagination a.page-link');
+    if (!a) return;
+    e.preventDefault();
+    const url = new URL(a.href);
+    const params = buildParams();
+    params.set('page', url.searchParams.get('page') || '1');
+    fetch(window.location.pathname + "?" + params.toString(), {
+      headers: { "X-Requested-With": "XMLHttpRequest" }
+    }).then(r => r.json()).then(data => { contenedor.innerHTML = data.html; });
+  });
+
+  // Autollenar fecha desde botones con data-fill-date
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('[data-fill-date]');
+    if (!btn) return;
+    const input = btn.closest('tr').querySelector('input[type="date"]');
+    if (input) input.value = btn.dataset.fillDate;
+  });
+});
+</script>
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    setTimeout(function () {
+        document.querySelectorAll('.mensaje-temporal').forEach(alerta => {
+            alerta.classList.remove('show');
+            alerta.classList.add('fade');
+            setTimeout(() => alerta.remove(), 500);
+        });
+    }, 1000);
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const formFiltros   = document.getElementById("form-filtros");
+  const formBusqueda  = document.getElementById("form-busqueda");
+  const contenedor    = document.getElementById("contenedor-tabla");
+  const inputBusqueda = document.getElementById("busquedaInput");
+
+  function buildParams() {
+    const params = new URLSearchParams(new FormData(formFiltros));
+    for (const [k, v] of new FormData(formBusqueda).entries()) params.set(k, v);
+    params.delete('page'); // al cambiar búsqueda, volver a la primera página
+    return params;
+  }
+
+  // Buscar mientras escribe
+  let t = null;
+  inputBusqueda.addEventListener('input', () => {
+    clearTimeout(t);
+    t = setTimeout(() => {
+      const params = buildParams();
+      fetch(window.location.pathname + "?" + params.toString(), {
+        headers: { "X-Requested-With": "XMLHttpRequest" }
+      }).then(r => r.json()).then(data => { contenedor.innerHTML = data.html; });
+    }, 350);
+  });
+
+  // Mantener filtros al paginar (delegación)
+  document.addEventListener('click', function (e) {
+    const a = e.target.closest('.pagination a.page-link');
+    if (!a) return;
+    e.preventDefault();
+    const url = new URL(a.href);
+    const params = buildParams();
+    params.set('page', url.searchParams.get('page') || '1');
+    fetch(window.location.pathname + "?" + params.toString(), {
+      headers: { "X-Requested-With": "XMLHttpRequest" }
+    }).then(r => r.json()).then(data => { contenedor.innerHTML = data.html; });
+  });
+
+  // Autollenar fecha desde botones con data-fill-date
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('[data-fill-date]');
+    if (!btn) return;
+    const input = btn.closest('tr').querySelector('input[type="date"]');
+    if (input) input.value = btn.dataset.fillDate;
+  });
+});
+</script>
+
+
+</body></html>

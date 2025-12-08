@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Registrar asistencia{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/asistencia.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="pagina-asistencia">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+
+            <!-- TÍTULO PRINCIPAL -->
+            <h1 class="titulo-modulo text-center">
+                📍 Registrar asistencia
+            </h1>
+
+            {% if ultima_accion %}
+            <p class="texto-ultima-accion text-center">
+                Última acción:
+                <strong>{{ ultima_accion.0 }}</strong> -
+                {{ ultima_accion.1|date:"d/m/Y H:i:s" }}
+            </p>
+            {% endif %}
+
+            <!-- BLOQUE 1: UBICACIÓN ACTUAL -->
+            <section class="panel-bloque bloque-ubicacion">
+                <div class="panel-body text-center">
+
+                    <p class="ubicacion-label mb-1">
+                        <strong>Ubicación actual:</strong>
+                        <span id="ubicacionTexto" class="ubicacion-texto">Detectando...</span>
+                    </p>
+
+                    <p id="ubicacionGeneral" class="ubicacion-general text-muted" style="display:none;">
+                        ✓ Ubicación registrada correctamente
+                    </p>
+
+                    <a id="linkUbicacion" href="#" target="_blank" class="link-mapa" style="display:none;">
+                        Ver ubicación en Google Maps
+                    </a>
+
+                    <p id="ubicacionError" class="ubicacion-error mb-0" style="display:none;"></p>
+
+                </div>
+            </section>
+
+            <!-- BLOQUE 2: ACCIONES (INGRESO / SALIDA) -->
+            <section class="panel-bloque bloque-acciones">
+                <div class="panel-body text-center">
+
+                    <form method="post" class="form-asistencia">
+                        {% csrf_token %}
+                        <input type="hidden" name="ubicacion" id="ubicacionInput">
+
+                        <button type="submit"
+                                name="accion"
+                                value="ingreso"
+                                class="btn btn-accion-ingreso me-2 mb-2"
+                                {% if ya_ingreso %}disabled{% endif %}>
+                            ✅ Ingreso
+                        </button>
+
+                        <button type="submit"
+                                name="accion"
+                                value="salida"
+                                class="btn btn-accion-salida me-2 mb-2"
+                                {% if not ya_ingreso or ya_salida %}disabled{% endif %}>
+                            ⛔ Salida
+                        </button>
+
+                        <a href="{% url 'inicio' %}" class="btn btn-accion-inicio mb-2">
+                            🏠 Inicio
+                        </a>
+                    </form>
+
+                </div>
+            </section>
+
+            <!-- BLOQUE 3: HISTORIAL SEMANAL -->
+            <section class="panel-bloque bloque-historial">
+                <div class="panel-body">
+
+                    {% with semana_anterior=semana_actual|add:"-1" semana_siguiente=semana_actual|add:"1" %}
+                    <div class="d-flex justify-content-between mb-3 align-items-center flex-wrap gap-2">
+
+                        <a href="?semana={{ semana_anterior }}&año={{ año_actual }}"
+                           class="btn btn-outline-primary btn-sm">
+                            ⬅ Semana anterior
+                        </a>
+
+                        <span class="fw-bold seccion-subtitulo">
+                            Semana {{ semana_actual }} - {{ año_actual }}
+                        </span>
+
+                        <a href="?semana={{ semana_siguiente }}&año={{ año_actual }}"
+                           class="btn btn-outline-primary btn-sm">
+                            Semana siguiente ➡
+                        </a>
+
+                    </div>
+                    {% endwith %}
+
+                    <h3 class="seccion-titulo text-center mb-3">
+                        🗓️ Historial de la semana {{ semana_actual }} - {{ año_actual }}
+                    </h3>
+
+                    {% if asistencias_semana %}
+                    <div class="tabla-historial-wrapper">
+
+                        <table class="table table-sm table-bordered table-hover text-center tabla-historial">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>📆 Fecha</th>
+                                    <th>🕐 Hora ingreso</th>
+                                    <th>🕔 Hora salida</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for asistencia in asistencias_semana %}
+                                <tr>
+                                    <td>{{ asistencia.fecha_ingreso|date:"d/m/Y" }}</td>
+                                    <td>{{ asistencia.fecha_ingreso|date:"H:i:s" }}</td>
+                                    <td>
+                                        {% if asistencia.fecha_salida %}
+                                            {{ asistencia.fecha_salida|date:"H:i:s" }}
+                                        {% else %}
+                                            —
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                    {% else %}
+                    <p class="text-center text-muted mb-0">
+                        No hay asistencias registradas esta semana.
+                    </p>
+                    {% endif %}
+
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/asistencia_registrar.js' %}"></script>
+{% endblock %}

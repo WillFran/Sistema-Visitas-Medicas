@@ -1,0 +1,178 @@
+/* static/css/visitas.css */
+
+/* Página general */
+.pagina-visitas {
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
+}
+
+/* Encabezado */
+.visitas-header .titulo-modulo {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #1a3b5d;
+}
+
+.visitas-header .subtitulo-modulo {
+    font-size: 0.95rem;
+    color: #6c757d;
+}
+
+.btn-volver-inicio {
+    background-color: #444a59;
+    border: none;
+    color: #fff;
+    border-radius: 999px;
+    padding: 0.45rem 1.2rem;
+    font-size: 0.9rem;
+}
+
+.btn-volver-inicio:hover {
+    background-color: #2f3440;
+    color: #fff;
+}
+
+/* Paneles (reutiliza el mismo concepto de visita_en_curso) */
+.panel-bloque {
+    background-color: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e3e6ef;
+}
+
+.panel-bloque + .panel-bloque {
+    margin-top: 1.2rem;
+}
+
+.panel-bloque .panel-body {
+    padding: 1.4rem 1.6rem;
+}
+
+/* Títulos de sección */
+.seccion-titulo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a3b5d;
+}
+
+/* Tabla rutas programadas */
+.tabla-rutas-programadas {
+    font-size: 0.9rem;
+}
+
+.tabla-rutas-programadas thead th {
+    background-color: #1a3b5d;
+    color: #ffffff;
+}
+
+/* Chips de estado (rutas programadas) */
+.chip-estado {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.chip-completado {
+    background: #d1f2e5;
+    color: #116149;
+}
+
+.chip-pendiente {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.chip-retraso {
+    background: #f8d7da;
+    color: #842029;
+}
+
+.chip-neutro {
+    background: #dbe4ff;
+    color: #25396f;
+}
+
+/* Buscador de médicos */
+.buscador-doctores {
+    margin-top: 1.5rem;
+}
+
+.buscador-doctores input[type="text"] {
+    border-radius: 999px;
+    padding-inline: 1.1rem;
+}
+
+/* Tabla de médicos */
+.tabla-doctores {
+    font-size: 0.9rem;
+    margin-top: 0.75rem;
+}
+
+.tabla-doctores thead th {
+    background-color: #f4f6fb;
+    color: #1a3b5d;
+}
+
+/* Puntitos semáforo */
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.dot-verde {
+    background: #16a34a;
+}
+
+.dot-amarillo {
+    background: #f59e0b;
+}
+
+.dot-rojo {
+    background: #ef4444;
+}
+
+/* Botones acciones tabla doctores */
+.tabla-doctores .btn {
+    font-size: 0.8rem;
+    border-radius: 999px;
+}
+
+/* Modal prescripciones */
+#prescModal .modal-content {
+    border-radius: 18px;
+}
+
+#prescModal .modal-body {
+    font-size: 0.9rem;
+}
+
+/* Responsivo */
+@media (max-width: 767.98px) {
+    .visitas-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 0.5rem;
+    }
+
+    .btn-volver-inicio {
+        width: 100%;
+        text-align: center;
+    }
+
+    .panel-bloque .panel-body {
+        padding: 1.2rem;
+    }
+
+    .tabla-rutas-programadas,
+    .tabla-doctores {
+        font-size: 0.85rem;
+    }
+}

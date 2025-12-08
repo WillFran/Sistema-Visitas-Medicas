@@ -1,0 +1,206 @@
+:root {
+    --azul-oscuro: #1a3b5d;
+    --azul-medio: #295f8a;
+    --gris-fondo: #f1f3f6;
+    --gris-borde: #d0d4dd;
+    --texto-principal: #1f2933;
+    --texto-secundario: #6b7280;
+}
+
+.pagina-inicio {
+    padding-bottom: 1.5rem;
+}
+
+/* Título del módulo */
+.titulo-modulo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+    margin-bottom: 1rem;
+}
+
+/* Panel base de cada bloque */
+.panel-bloque {
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--gris-borde);
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.06);
+}
+
+.panel-body {
+    padding: 1.25rem 1.4rem;
+}
+
+/* BLOQUE 1: Bienvenida */
+.bloque-bienvenida {
+    background: linear-gradient(90deg, #e9f2ff, #ffffff);
+    border-left: 4px solid var(--azul-medio);
+}
+
+.bienvenida-titulo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+}
+
+.bienvenida-subtitulo {
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+}
+
+/* BLOQUE 2: Accesos rápidos */
+.bloque-accesos {
+    background-color: #ffffff;
+}
+
+/* Botones accesos rápidos */
+.btn-accion {
+    background-color: var(--azul-oscuro);
+    border-color: var(--azul-oscuro);
+    color: #ffffff;
+    border-radius: 999px;
+    padding: 0.45rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.btn-accion:hover,
+.btn-accion:focus {
+    background-color: #13263a;
+    border-color: #13263a;
+    color: #ffffff;
+}
+
+/* BLOQUE 3: Material informativo */
+.bloque-material {
+    background-color: #f8fafc;
+}
+
+.bloque-material-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid #e3e6ee;
+}
+
+/* Títulos de sección */
+.seccion-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+}
+
+.seccion-subtitulo {
+    font-size: 0.85rem;
+    color: var(--texto-secundario);
+}
+
+/* Badge del mes */
+.badge-mes {
+    background-color: var(--azul-medio);
+    color: #ffffff;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+}
+
+/* Botón mostrar/ocultar */
+.btn-toggle-material {
+    background-color: #ffffff;
+    border-radius: 999px;
+    border: 1px solid var(--gris-borde);
+    color: var(--texto-secundario);
+    padding: 0.25rem 0.7rem;
+    font-size: 0.8rem;
+}
+
+.btn-toggle-material:hover {
+    background-color: #e5e9f0;
+    color: var(--texto-principal);
+}
+
+/* CARRUSEL FLYERS */
+.flyer-carousel {
+    position: relative;
+}
+
+.btn-flyer {
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.btn-flyer:focus {
+    box-shadow: none;
+}
+
+.flyer-card {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.flyer-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.flyer-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.18);
+}
+
+/* Indicadores del carrusel */
+.flyer-indicators {
+    margin-top: 0.75rem;
+}
+
+.flyer-indicators button {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #cbd2e1;
+}
+
+.flyer-indicators .active {
+    background-color: var(--azul-medio);
+}
+
+/* Controles del carrusel (flechas) */
+.flyer-control {
+    filter: invert(20%) sepia(6%) saturate(1000%) hue-rotate(175deg) brightness(90%);
+}
+
+/* Modales */
+.modal-content {
+    border-radius: 0.75rem;
+}
+
+.modal-title {
+    font-size: 0.95rem;
+    color: var(--azul-oscuro);
+}
+
+/* Responsivo */
+@media (max-width: 576px) {
+    .panel-body {
+        padding: 1rem;
+    }
+
+    .btn-accion {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .bloque-material-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

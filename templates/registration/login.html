@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Iniciar sesión{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{# Ocultamos navbar y mensajes en la página de login #}
+{% block navbar %}{% endblock %}
+{% block messages %}{% endblock %}
+
+{# Reemplazamos totalmente el wrapper para usar pantalla completa #}
+{% block content_wrapper %}
+<div class="login-page d-flex align-items-center justify-content-center">
+    <div class="login-card shadow-lg">
+        <div class="login-logo text-center mb-3">
+            <div class="logo-circle mx-auto mb-2">
+                <span class="logo-text">LOGO</span>
+            </div>
+            <h1 class="login-title mb-1">Sistema de Visitas Médicas</h1>
+            <p class="login-subtitle mb-0">Ingrese sus credenciales</p>
+        </div>
+
+        {% if messages %}
+        <div class="mb-3">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} mb-2" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger small mb-3" role="alert">
+                {% for error in form.non_field_errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label for="{{ form.username.id_for_label }}" class="form-label mb-1">
+                    Correo / Usuario
+                </label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                <div class="text-error mt-1">
+                    {% for error in form.username.errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-4 password-wrapper">
+                <label for="{{ form.password.id_for_label }}" class="form-label mb-1">
+                    Contraseña
+                </label>
+
+                <div class="position-relative">
+                    {{ form.password }}
+
+                    <button type="button" class="btn-password-toggle" aria-label="Mostrar u ocultar contraseña">
+                        <svg class="icon-eye" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" stroke="currentColor"
+                                stroke-width="2" fill="none" />
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none" />
+                        </svg>
+                    </button>
+                </div>
+
+                {% if form.password.errors %}
+                <div class="text-error mt-1">
+                    {% for error in form.password.errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+            {% endif %}
+
+            <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-primario">
+                    Ingresar
+                </button>
+            </div>
+
+            <p class="login-help text-center mb-0">
+                ¿Problemas para ingresar? <span>Contacte al administrador.</span>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock content_wrapper %}
+
+{% block extra_js %}
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

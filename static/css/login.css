@@ -1,0 +1,165 @@
+/* Usa la misma paleta que institucional.css */
+:root {
+    --azul-oscuro: #1a3b5d;
+    --azul-medio: #295f8a;
+    --gris-fondo: #f1f3f6;
+    --gris-borde: #d0d4dd;
+    --texto-principal: #1f2933;
+    --texto-secundario: #6b7280;
+}
+
+/* Página de login: fondo sobrio, sin exagerar el degradado */
+.login-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a3b5d 0%, #295f8a 40%, #1a3b5d 100%);
+    padding: 1.5rem;
+}
+
+/* Tarjeta más institucional (menos redondeada) */
+.login-card {
+    max-width: 420px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 0.35rem;
+    padding: 2rem 2.25rem 1.75rem;
+    border: 1px solid var(--gris-borde);
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.18);
+}
+
+/* Logo circular se mantiene como elemento neutro */
+.logo-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #e4ebf4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+}
+
+.logo-text {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--azul-oscuro);
+}
+
+/* Títulos */
+.login-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+}
+
+.login-subtitle {
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+}
+
+/* Etiquetas */
+.form-label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--texto-principal);
+}
+
+/* Inputs (rectos, sobrios) */
+.login-card input[type="text"],
+.login-card input[type="email"],
+.login-card input[type="password"] {
+    width: 100%;
+    border-radius: 0.25rem;
+    border: 1px solid var(--gris-borde);
+    padding: 0.5rem 0.65rem;
+    font-size: 0.93rem;
+    color: var(--texto-principal);
+    background-color: #ffffff;
+}
+
+.login-card input[type="text"]:focus,
+.login-card input[type="email"]:focus,
+.login-card input[type="password"]:focus {
+    border-color: var(--azul-medio);
+    outline: none;
+    box-shadow: 0 0 0 0.12rem rgba(41, 95, 138, 0.25);
+}
+
+/* Wrapper para ubicar el ojo dentro del input */
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 2.5rem !important;
+}
+
+/* Botón del ojo dentro del campo */
+.btn-password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0.6rem;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.btn-password-toggle:hover svg {
+    stroke: var(--azul-oscuro);
+}
+
+.icon-eye,
+.icon-eye-off {
+    width: 20px;
+    height: 20px;
+    stroke: var(--azul-medio);
+    pointer-events: none;
+}
+
+/* Botón principal institucional */
+.btn-primario {
+    background-color: var(--azul-oscuro);
+    border-color: var(--azul-oscuro);
+    color: #ffffff;
+    font-weight: 500;
+    padding: 0.55rem 1rem;
+    border-radius: 0.35rem;
+    font-size: 0.95rem;
+}
+
+.btn-primario:hover,
+.btn-primario:focus {
+    background-color: #13263a;
+    border-color: #13263a;
+    color: #ffffff;
+}
+
+/* Texto ayuda */
+.login-help {
+    font-size: 0.82rem;
+    color: var(--texto-secundario);
+}
+
+.login-help span {
+    font-weight: 600;
+}
+
+/* Errores */
+.text-error {
+    color: #dc3545;
+    font-size: 0.8rem;
+}
+
+.login-card .alert {
+    font-size: 0.85rem;
+    padding: 0.45rem 0.75rem;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .login-card {
+        padding: 1.75rem 1.5rem 1.5rem;
+    }
+}

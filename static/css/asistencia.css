@@ -1,0 +1,162 @@
+:root {
+    --azul-oscuro: #1a3b5d;
+    --azul-medio: #295f8a;
+    --verde-ok: #15803d;
+    --rojo-error: #b91c1c;
+    --gris-fondo: #f1f3f6;
+    --gris-borde: #d0d4dd;
+    --texto-principal: #1f2933;
+    --texto-secundario: #6b7280;
+}
+
+.pagina-asistencia {
+    padding-bottom: 1.5rem;
+}
+
+.titulo-modulo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+    margin-bottom: 0.5rem;
+}
+
+.texto-ultima-accion {
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+}
+
+/* Panel base de cada bloque */
+.panel-bloque {
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--gris-borde);
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.06);
+    background-color: #ffffff;
+}
+
+.panel-body {
+    padding: 1.25rem 1.4rem;
+}
+
+/* BLOQUE UBICACIÓN */
+.bloque-ubicacion {
+    background: linear-gradient(90deg, #e9f9ff, #ffffff);
+    border-left: 4px solid var(--azul-medio);
+}
+
+.ubicacion-label {
+    font-size: 0.95rem;
+    color: var(--texto-principal);
+}
+
+.ubicacion-texto {
+    font-weight: 500;
+    margin-left: 0.25rem;
+}
+
+.ubicacion-ayuda {
+    font-size: 0.8rem;
+    color: var(--texto-secundario);
+}
+
+.link-mapa {
+    display: inline-block;
+    font-size: 0.85rem;
+    text-decoration: underline;
+    color: var(--azul-medio);
+}
+
+.link-mapa:hover {
+    color: var(--azul-oscuro);
+}
+
+.ubicacion-error {
+    font-size: 0.8rem;
+    color: var(--rojo-error);
+}
+
+/* BLOQUE ACCIONES */
+.bloque-acciones {
+    background-color: #ffffff;
+}
+
+.form-asistencia .btn {
+    min-width: 120px;
+}
+
+.btn-accion-ingreso {
+    background-color: var(--verde-ok);
+    border-color: var(--verde-ok);
+    color: #ffffff;
+}
+
+.btn-accion-ingreso:hover,
+.btn-accion-ingreso:focus {
+    background-color: #166534;
+    border-color: #166534;
+    color: #ffffff;
+}
+
+.btn-accion-salida {
+    background-color: #e11d48;
+    border-color: #e11d48;
+    color: #ffffff;
+}
+
+.btn-accion-salida:hover,
+.btn-accion-salida:focus {
+    background-color: #be123c;
+    border-color: #be123c;
+    color: #ffffff;
+}
+
+.btn-accion-inicio {
+    background-color: #6b7280;
+    border-color: #6b7280;
+    color: #ffffff;
+}
+
+.btn-accion-inicio:hover,
+.btn-accion-inicio:focus {
+    background-color: #4b5563;
+    border-color: #4b5563;
+    color: #ffffff;
+}
+
+/* BLOQUE HISTORIAL */
+.bloque-historial {
+    background-color: #f8fafc;
+}
+
+.seccion-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+}
+
+.seccion-subtitulo {
+    font-size: 0.9rem;
+    color: var(--texto-secundario);
+}
+
+/* Tabla */
+.tabla-historial-wrapper {
+    overflow-x: auto;
+}
+
+.tabla-historial th,
+.tabla-historial td {
+    font-size: 0.85rem;
+    vertical-align: middle;
+}
+
+/* Responsivo */
+@media (max-width: 576px) {
+    .panel-body {
+        padding: 1rem;
+    }
+
+    .form-asistencia .btn {
+        width: 100%;
+    }
+}

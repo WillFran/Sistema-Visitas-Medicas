@@ -1,0 +1,127 @@
+/* static/css/rutas.css */
+
+/* Contenedor general de la página de rutas */
+.pagina-rutas {
+    padding: 1.5rem 0 2.5rem;
+}
+
+/* Encabezado del módulo */
+.encabezado-modulo .titulo-modulo {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #1a3b5d;
+}
+
+.encabezado-modulo .texto-descripcion {
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+.btn-accion-inicio {
+    background-color: #4b4f57;
+    color: #fff;
+    border-radius: 999px;
+    padding: 0.45rem 1.1rem;
+    font-size: 0.9rem;
+}
+.btn-accion-inicio:hover {
+    background-color: #33373e;
+    color: #fff;
+}
+
+/* Panel genérico reutilizable (similar al de asistencia) */
+.panel-bloque {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e2e6f0;
+    box-shadow: 0 6px 18px rgba(10, 34, 64, 0.06);
+    margin-bottom: 1.25rem;
+}
+
+.panel-bloque .panel-body {
+    padding: 1.25rem 1.5rem;
+}
+
+.seccion-titulo {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1a3b5d;
+}
+
+/* Leyenda de estados */
+.leyenda-estados .badge {
+    font-weight: 500;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+}
+
+/* Tabla */
+.bloque-tabla .table {
+    font-size: 0.9rem;
+}
+
+.bloque-tabla thead th {
+    background-color: #f4f6fb;
+    color: #1a3b5d;
+}
+
+/* Responsive */
+@media (max-width: 767.98px) {
+    .encabezado-modulo {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 0.5rem;
+    }
+    .btn-accion-inicio {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* === Tabla de rutas === */
+.tabla-rutas thead th {
+    background-color: #f4f6fb;
+    color: #1a3b5d;
+    border-bottom-width: 1px;
+}
+
+/* Chips de estado (semáforo) */
+.chip-estado {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.chip-completado {
+    background: #d1f2e5;
+    color: #116149;
+}
+
+.chip-pendiente {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.chip-retraso {
+    background: #f8d7da;
+    color: #842029;
+}
+
+.chip-sin-ruta {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.chip-neutro {
+    background: #dbe4ff;
+    color: #25396f;
+}
+
+.btn-crear-ruta {
+    border-radius: 999px;
+    padding-inline: 0.9rem;
+}

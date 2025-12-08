@@ -1,0 +1,72 @@
+/* ================================
+   Estilo institucional tipo entidad pública
+   ================================ */
+
+/* Paleta base */
+:root {
+    --azul-oscuro: #1a3b5d;
+    --azul-medio: #295f8a;
+    --gris-fondo: #f1f3f6;
+    --gris-borde: #d0d4dd;
+    --texto-principal: #1f2933;
+    --texto-secundario: #6b7280;
+}
+
+/* Fondo general sobrio */
+body {
+    background-color: var(--gris-fondo);
+    color: var(--texto-principal);
+    font-size: 0.95rem;
+}
+
+/* Navbar institucional */
+.navbar.bg-dark {
+    background-color: var(--azul-oscuro) !important;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+    font-size: 0.9rem;
+}
+
+/* Botón primario institucional genérico */
+.btn-primario-global,
+.btn-primary {
+    background-color: var(--azul-oscuro);
+    border-color: var(--azul-oscuro);
+}
+
+.btn-primario-global:hover,
+.btn-primary:hover {
+    background-color: #13263a;
+    border-color: #13263a;
+}
+
+/* Tarjetas base tipo panel institucional */
+.card-panel {
+    background-color: #ffffff;
+    border-radius: 0.35rem;
+    border: 1px solid var(--gris-borde);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+/* Títulos de módulo */
+.titulo-modulo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+    margin-bottom: 1rem;
+}
+
+/* Badges */
+.badge-institucional {
+    background-color: var(--azul-medio);
+    color: #ffffff;
+    border-radius: 999px;
+    font-size: 0.75rem;
+}
+
+/* Ajustes mensajes flash */
+.mensaje-temporal {
+    font-size: 0.9rem;
+}

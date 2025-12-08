@@ -1,0 +1,209 @@
+<!--templates/inicio.html-->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="pagina-inicio">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+
+            <!-- TÍTULO PRINCIPAL -->
+            <h1 class="titulo-modulo">Inicio del sistema</h1>
+
+            <!-- BLOQUE 1: BIENVENIDA -->
+            <section class="panel-bloque bloque-bienvenida">
+                <div class="panel-body">
+                    <h2 class="bienvenida-titulo mb-1">
+                        Bienvenido, {{ request.user.first_name|default:request.user.username }}
+                    </h2>
+                    <p class="bienvenida-subtitulo mb-0">
+                        {% if request.user.is_superuser %}
+                        Acceso de administrador completo. Puedes gestionar todo el sistema.
+                        {% elif not tiene_rol %}
+                        Tu rol aún no ha sido asignado. Contacta al administrador para obtener acceso completo.
+                        {% elif es_visitador %}
+                        Has ingresado como <strong>visitador médico</strong>.
+                        Puedes registrar tus visitas, asistencia y consultar información relevante.
+                        {% elif es_supervisor %}
+                        Has ingresado como <strong>supervisor</strong>.
+                        Puedes monitorear a los visitadores y revisar estadísticas de actividades.
+                        {% else %}
+                        Tu rol no está configurado correctamente. Contacta al administrador.
+                        {% endif %}
+                    </p>
+
+                </div>
+            </section>
+
+            <!-- BLOQUE 2: ACCESOS RÁPIDOS -->
+            <section class="panel-bloque bloque-accesos">
+                <div class="panel-body">
+                    <h3 class="seccion-titulo mb-1">Accesos rápidos</h3>
+                    <p class="seccion-subtitulo mb-3">
+                        Seleccione una opción para comenzar a trabajar.
+                    </p>
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="{% url 'registrar_asistencia' %}" class="btn btn-accion">
+                            Registrar asistencia
+                        </a>
+                        <a href="{% url 'crear_ruta' %}" class="btn btn-accion">
+                            Gestionar rutas
+                        </a>
+                        <a href="{% url 'visitas:gestionar_visitas_medicas' %}" class="btn btn-accion">
+                            Gestionar visitas médicas
+                        </a>
+                        <a href="{% url 'visitas:ver_historial' %}" class="btn btn-accion">
+                            Historial de visitas
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BLOQUE 3: MATERIAL INFORMATIVO (DESPLEGABLE + CARRUSEL 1x1) -->
+            <section class="panel-bloque bloque-material">
+                <div class="panel-body">
+
+                    <div class="bloque-material-header">
+                        <div>
+                            <h3 class="seccion-titulo mb-1">Material informativo</h3>
+                            <p class="seccion-subtitulo mb-0">
+                                Recursos visuales del mes disponibles para consulta.
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge badge-mes">Mes actual</span>
+                            <button class="btn btn-toggle-material btn-sm" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#bloqueMaterial" aria-expanded="true" aria-controls="bloqueMaterial">
+                                Ocultar / mostrar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="collapse show" id="bloqueMaterial">
+                        <div id="flyerCarousel" class="carousel slide flyer-carousel" data-bs-ride="false">
+                            <div class="carousel-inner">
+
+                                <!-- SLIDE 1 -->
+                                <div class="carousel-item active">
+                                    <button type="button" class="btn btn-flyer w-100" data-bs-toggle="modal"
+                                        data-bs-target="#flyer1Modal">
+                                        <div class="flyer-card">
+                                            <img src="https://res.cloudinary.com/diugppuuf/image/upload/1_dpkxkt.jpg"
+                                                class="d-block w-100" alt="Material informativo 1">
+                                        </div>
+                                    </button>
+                                </div>
+
+                                <!-- SLIDE 2 -->
+                                <div class="carousel-item">
+                                    <button type="button" class="btn btn-flyer w-100" data-bs-toggle="modal"
+                                        data-bs-target="#flyer2Modal">
+                                        <div class="flyer-card">
+                                            <img src="https://res.cloudinary.com/diugppuuf/image/upload/2_bsbtqz.jpg"
+                                                class="d-block w-100" alt="Material informativo 2">
+                                        </div>
+                                    </button>
+                                </div>
+
+                                <!-- SLIDE 3 -->
+                                <div class="carousel-item">
+                                    <button type="button" class="btn btn-flyer w-100" data-bs-toggle="modal"
+                                        data-bs-target="#flyer3Modal">
+                                        <div class="flyer-card">
+                                            <img src="https://res.cloudinary.com/diugppuuf/image/upload/3_ibiubq.jpg"
+                                                class="d-block w-100" alt="Material informativo 3">
+                                        </div>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <!-- Indicadores -->
+                            <div class="carousel-indicators flyer-indicators">
+                                <button type="button" data-bs-target="#flyerCarousel" data-bs-slide-to="0"
+                                    class="active" aria-current="true" aria-label="Flyer 1"></button>
+                                <button type="button" data-bs-target="#flyerCarousel" data-bs-slide-to="1"
+                                    aria-label="Flyer 2"></button>
+                                <button type="button" data-bs-target="#flyerCarousel" data-bs-slide-to="2"
+                                    aria-label="Flyer 3"></button>
+                            </div>
+
+                            <!-- Controles -->
+                            <button class="carousel-control-prev flyer-control" type="button"
+                                data-bs-target="#flyerCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next flyer-control" type="button"
+                                data-bs-target="#flyerCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Siguiente</span>
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+
+{# MODALES: se mantienen para ver el flyer en grande #}
+<!-- MODAL FLYER 1 -->
+<div class="modal fade" id="flyer1Modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Material informativo 1</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="https://res.cloudinary.com/diugppuuf/image/upload/1_dpkxkt.jpg" class="img-fluid"
+                    alt="Material informativo 1">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL FLYER 2 -->
+<div class="modal fade" id="flyer2Modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Material informativo 2</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="https://res.cloudinary.com/diugppuuf/image/upload/2_bsbtqz.jpg" class="img-fluid"
+                    alt="Material informativo 2">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL FLYER 3 -->
+<div class="modal fade" id="flyer3Modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Material informativo 3</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="https://res.cloudinary.com/diugppuuf/image/upload/3_ibiubq.jpg" class="img-fluid"
+                    alt="Material informativo 3">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
